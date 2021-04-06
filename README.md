@@ -1,3 +1,13 @@
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hypercorrelation-squeeze-for-few-shot/few-shot-semantic-segmentation-on-pascal-5i-1)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-pascal-5i-1?p=hypercorrelation-squeeze-for-few-shot)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hypercorrelation-squeeze-for-few-shot/few-shot-semantic-segmentation-on-pascal-5i-5)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-pascal-5i-5?p=hypercorrelation-squeeze-for-few-shot)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hypercorrelation-squeeze-for-few-shot/few-shot-semantic-segmentation-on-pascal-5i)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-pascal-5i?p=hypercorrelation-squeeze-for-few-shot)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hypercorrelation-squeeze-for-few-shot/few-shot-semantic-segmentation-on-coco-20i-1)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-coco-20i-1?p=hypercorrelation-squeeze-for-few-shot)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hypercorrelation-squeeze-for-few-shot/few-shot-semantic-segmentation-on-coco-20i-5)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-coco-20i-5?p=hypercorrelation-squeeze-for-few-shot)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hypercorrelation-squeeze-for-few-shot/few-shot-semantic-segmentation-on-coco-20i-10)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-coco-20i-10?p=hypercorrelation-squeeze-for-few-shot)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hypercorrelation-squeeze-for-few-shot/few-shot-semantic-segmentation-on-fss-1000-1)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-fss-1000-1?p=hypercorrelation-squeeze-for-few-shot)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hypercorrelation-squeeze-for-few-shot/few-shot-semantic-segmentation-on-fss-1000-5)](https://paperswithcode.com/sota/few-shot-semantic-segmentation-on-fss-1000-5?p=hypercorrelation-squeeze-for-few-shot)
+
+
 ## Hypercorrelation Squeeze for Few-Shot Semantic Segmentation
 This is the implementation of the paper "Hypercorrelation Squeeze for Few-Shot Semantic Segmentation" by Juhong Min, Dahyun Kang, and Minsu Cho. Implemented on Python 3.7 and Pytorch 1.5.1.
 
