@@ -162,7 +162,7 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 > ```
 
 > ### 4. Evaluation *without support feature masking* on PASCAL-5<sup>i</sup>
-> * To reproduce the results in Tab.1 of our main paper, **UNCOMMENT line 51 in hsnet.py**: support_feats = self.mask_feature(support_feats, support_mask.clone())
+> * To reproduce the results in Tab.1 of our main paper, **COMMENT OUT line 51 in hsnet.py**: support_feats = self.mask_feature(support_feats, support_mask.clone())
 > 
 > Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/14JAwx1TCohj2_ZiMFeDcTB9HBINxmir2?usp=sharing)].
 > ```bash
