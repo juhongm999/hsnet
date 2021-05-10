@@ -64,7 +64,7 @@ if __name__ == '__main__':
     Logger.initialize(args, training=True)
 
     # Model initialization
-    model = HypercorrSqueezeNetwork(args.backbone)
+    model = HypercorrSqueezeNetwork(args.backbone, False)
     Logger.log_params(model)
 
     # Device setup
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     Evaluator.initialize()
 
     # Dataset initialization
-    FSSDataset.initialize(img_size=400, datapath=args.datapath)
+    FSSDataset.initialize(img_size=400, datapath=args.datapath, use_original_imgsize=False)
     dataloader_trn = FSSDataset.build_dataloader(args.benchmark, args.bsz, args.nworker, args.fold, 'trn')
     dataloader_val = FSSDataset.build_dataloader(args.benchmark, args.bsz, args.nworker, args.fold, 'val')
 
