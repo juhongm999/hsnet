@@ -92,7 +92,6 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 >                 --benchmark pascal
 >                 --lr 1e-3
 >                 --bsz 20
->                 --load "path_to_trained_model/best_model.pt"
 >                 --logpath "your_experiment_name"
 > ```
 > * Training takes approx. 2 days until convergence (trained with four 2080 Ti GPUs).
@@ -105,7 +104,6 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 >                 --benchmark coco 
 >                 --lr 1e-3
 >                 --bsz 40
->                 --load "path_to_trained_model/best_model.pt"
 >                 --logpath "your_experiment_name"
 > ```
 > * Training takes approx. 1 week until convergence (trained four Titan RTX GPUs).
@@ -116,7 +114,6 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 >                 --benchmark fss 
 >                 --lr 1e-3
 >                 --bsz 20
->                 --load "path_to_trained_model/best_model.pt"
 >                 --logpath "your_experiment_name"
 > ```
 > * Training takes approx. 3 days until convergence (trained with four 2080 Ti GPUs).
