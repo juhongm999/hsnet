@@ -14,11 +14,12 @@ from .learner import HPNLearner
 
 
 class HypercorrSqueezeNetwork(nn.Module):
-    def __init__(self, backbone):
+    def __init__(self, backbone, use_original_imgsize):
         super(HypercorrSqueezeNetwork, self).__init__()
 
         # 1. Backbone network initialization
         self.backbone_type = backbone
+        self.use_original_imgsize = use_original_imgsize
         if backbone == 'vgg16':
             self.backbone = vgg.vgg16(pretrained=True)
             self.feat_ids = [17, 19, 21, 24, 26, 28, 30]
@@ -52,7 +53,8 @@ class HypercorrSqueezeNetwork(nn.Module):
             corr = Correlation.multilayer_correlation(query_feats, support_feats, self.stack_ids)
 
         logit_mask = self.hpn_learner(corr)
-        logit_mask = F.interpolate(logit_mask, support_img.size()[2:], mode='bilinear', align_corners=True)
+        if not self.use_original_imgsize:
+            logit_mask = F.interpolate(logit_mask, support_img.size()[2:], mode='bilinear', align_corners=True)
 
         return logit_mask
 
@@ -68,6 +70,11 @@ class HypercorrSqueezeNetwork(nn.Module):
         logit_mask_agg = 0
         for s_idx in range(nshot):
             logit_mask = self(batch['query_img'], batch['support_imgs'][:, s_idx], batch['support_masks'][:, s_idx])
+
+            if self.use_original_imgsize:
+                org_qry_imsize = tuple([batch['org_query_imsize'][1].item(), batch['org_query_imsize'][0].item()])
+                logit_mask = F.interpolate(logit_mask, org_qry_imsize, mode='bilinear', align_corners=True)
+
             logit_mask_agg += logit_mask.argmax(dim=1).clone()
             if nshot == 1: return logit_mask_agg
 

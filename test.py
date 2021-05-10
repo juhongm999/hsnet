@@ -1,6 +1,7 @@
 r""" Hypercorrelation Squeeze testing code """
 import argparse
 
+import torch.nn.functional as F
 import torch.nn as nn
 import torch
 
@@ -24,6 +25,8 @@ def test(model, dataloader, nshot):
         # 1. Hypercorrelation Squeeze Networks forward pass
         batch = utils.to_cuda(batch)
         pred_mask = model.module.predict_mask_nshot(batch, nshot=nshot)
+
+        assert pred_mask.size() == batch['query_mask'].size()
 
         # 2. Evaluate prediction
         area_inter, area_union = Evaluator.classify_prediction(pred_mask.clone(), batch)
@@ -58,11 +61,12 @@ if __name__ == '__main__':
     parser.add_argument('--nshot', type=int, default=1)
     parser.add_argument('--backbone', type=str, default='resnet101', choices=['vgg16', 'resnet50', 'resnet101'])
     parser.add_argument('--visualize', action='store_true')
+    parser.add_argument('--use_original_imgsize', action='store_true')
     args = parser.parse_args()
     Logger.initialize(args, training=False)
 
     # Model initialization
-    model = HypercorrSqueezeNetwork(args.backbone)
+    model = HypercorrSqueezeNetwork(args.backbone, args.use_original_imgsize)
     model.eval()
     Logger.log_params(model)
 
@@ -81,7 +85,7 @@ if __name__ == '__main__':
     Visualizer.initialize(args.visualize)
 
     # Dataset initialization
-    FSSDataset.initialize(img_size=400, datapath=args.datapath)
+    FSSDataset.initialize(img_size=400, datapath=args.datapath, use_original_imgsize=args.use_original_imgsize)
     dataloader_test = FSSDataset.build_dataloader(args.benchmark, args.bsz, args.nworker, args.fold, 'test', args.nshot)
 
     # Test HSNet

@@ -9,13 +9,14 @@ import numpy as np
 
 
 class DatasetPASCAL(Dataset):
-    def __init__(self, datapath, fold, transform, split, shot):
+    def __init__(self, datapath, fold, transform, split, shot, use_original_imgsize):
         self.split = 'val' if split in ['val', 'test'] else 'trn'
         self.fold = fold
         self.nfolds = 4
         self.nclass = 20
         self.benchmark = 'pascal'
         self.shot = shot
+        self.use_original_imgsize = use_original_imgsize
 
         self.img_path = os.path.join(datapath, 'VOC2012/JPEGImages/')
         self.ann_path = os.path.join(datapath, 'VOC2012/SegmentationClassAug/')
@@ -31,11 +32,12 @@ class DatasetPASCAL(Dataset):
     def __getitem__(self, idx):
         idx %= len(self.img_metadata)  # for testing, as n_images < 1000
         query_name, support_names, class_sample = self.sample_episode(idx)
-        query_img, query_cmask, support_imgs, support_cmasks = self.load_frame(query_name, support_names)
+        query_img, query_cmask, support_imgs, support_cmasks, org_qry_imsize = self.load_frame(query_name, support_names)
 
         query_img = self.transform(query_img)
-        query_cmask = F.interpolate(query_cmask.unsqueeze(0).unsqueeze(0).float(), query_img.size()[-2:], mode='nearest').squeeze()
-        query_mask, query_ignore_idx = self.extract_ignore_idx(query_cmask, class_sample)
+        if not self.use_original_imgsize:
+            query_cmask = F.interpolate(query_cmask.unsqueeze(0).unsqueeze(0).float(), query_img.size()[-2:], mode='nearest').squeeze()
+        query_mask, query_ignore_idx = self.extract_ignore_idx(query_cmask.float(), class_sample)
 
         support_imgs = torch.stack([self.transform(support_img) for support_img in support_imgs])
 
@@ -53,6 +55,8 @@ class DatasetPASCAL(Dataset):
                  'query_mask': query_mask,
                  'query_name': query_name,
                  'query_ignore_idx': query_ignore_idx,
+
+                 'org_query_imsize': org_qry_imsize,
 
                  'support_imgs': support_imgs,
                  'support_masks': support_masks,
@@ -76,7 +80,9 @@ class DatasetPASCAL(Dataset):
         support_imgs = [self.read_img(name) for name in support_names]
         support_masks = [self.read_mask(name) for name in support_names]
 
-        return query_img, query_mask, support_imgs, support_masks
+        org_qry_imsize = query_img.size
+
+        return query_img, query_mask, support_imgs, support_masks, org_qry_imsize
 
     def read_mask(self, img_name):
         r"""Return segmentation mask in PIL Image"""
@@ -97,7 +103,6 @@ class DatasetPASCAL(Dataset):
             if len(support_names) == self.shot: break
 
         return query_name, support_names, class_sample
-        # return query_name, [query_name], class_sample
 
     def build_class_ids(self):
         nclass_trn = self.nclass // self.nfolds

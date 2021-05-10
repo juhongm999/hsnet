@@ -10,7 +10,7 @@ import numpy as np
 
 
 class DatasetCOCO(Dataset):
-    def __init__(self, datapath, fold, transform, split, shot):
+    def __init__(self, datapath, fold, transform, split, shot, use_original_imgsize):
         self.split = 'val' if split in ['val', 'test'] else 'trn'
         self.fold = fold
         self.nfolds = 4
@@ -20,6 +20,7 @@ class DatasetCOCO(Dataset):
         self.split_coco = split if split == 'val2014' else 'train2014'
         self.base_path = os.path.join(datapath, 'COCO2014')
         self.transform = transform
+        self.use_original_imgsize = use_original_imgsize
 
         self.class_ids = self.build_class_ids()
         self.img_metadata_classwise = self.build_img_metadata_classwise()
@@ -31,10 +32,12 @@ class DatasetCOCO(Dataset):
     def __getitem__(self, idx):
         # ignores idx during training & testing and perform uniform sampling over object classes to form an episode
         # (due to the large size of the COCO dataset)
-        query_img, query_mask, support_imgs, support_masks, query_name, support_names, class_sample = self.load_frame()
+        query_img, query_mask, support_imgs, support_masks, query_name, support_names, class_sample, org_qry_imsize = self.load_frame()
 
         query_img = self.transform(query_img)
-        query_mask = F.interpolate(query_mask.unsqueeze(0).unsqueeze(0).float(), query_img.size()[-2:], mode='nearest').squeeze()
+        query_mask = query_mask.float()
+        if not self.use_original_imgsize:
+            query_mask = F.interpolate(query_mask.unsqueeze(0).unsqueeze(0).float(), query_img.size()[-2:], mode='nearest').squeeze()
 
         support_imgs = torch.stack([self.transform(support_img) for support_img in support_imgs])
         for midx, smask in enumerate(support_masks):
@@ -44,6 +47,9 @@ class DatasetCOCO(Dataset):
         batch = {'query_img': query_img,
                  'query_mask': query_mask,
                  'query_name': query_name,
+
+                 'org_query_imsize': org_qry_imsize,
+
                  'support_imgs': support_imgs,
                  'support_masks': support_masks,
                  'support_names': support_names,
@@ -81,6 +87,8 @@ class DatasetCOCO(Dataset):
         query_img = Image.open(os.path.join(self.base_path, query_name)).convert('RGB')
         query_mask = self.read_mask(query_name)
 
+        org_qry_imsize = query_img.size
+
         query_mask[query_mask != class_sample + 1] = 0
         query_mask[query_mask == class_sample + 1] = 1
 
@@ -99,4 +107,5 @@ class DatasetCOCO(Dataset):
             support_mask[support_mask == class_sample + 1] = 1
             support_masks.append(support_mask)
 
-        return query_img, query_mask, support_imgs, support_masks, query_name, support_names, class_sample
+        return query_img, query_mask, support_imgs, support_masks, query_name, support_names, class_sample, org_qry_imsize
+

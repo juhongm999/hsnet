@@ -10,7 +10,7 @@ from data.fss import DatasetFSS
 class FSSDataset:
 
     @classmethod
-    def initialize(cls, img_size, datapath):
+    def initialize(cls, img_size, datapath, use_original_imgsize):
 
         cls.datasets = {
             'pascal': DatasetPASCAL,
@@ -21,6 +21,7 @@ class FSSDataset:
         cls.img_mean = [0.485, 0.456, 0.406]
         cls.img_std = [0.229, 0.224, 0.225]
         cls.datapath = datapath
+        cls.use_original_imgsize = use_original_imgsize
 
         cls.transform = transforms.Compose([transforms.Resize(size=(img_size, img_size)),
                                             transforms.ToTensor(),
@@ -33,7 +34,7 @@ class FSSDataset:
         shuffle = split == 'trn'
         nworker = nworker if split == 'trn' else 0
 
-        dataset = cls.datasets[benchmark](cls.datapath, fold=fold, transform=cls.transform, split=split, shot=shot)
+        dataset = cls.datasets[benchmark](cls.datapath, fold=fold, transform=cls.transform, split=split, shot=shot, use_original_imgsize=cls.use_original_imgsize)
         dataloader = DataLoader(dataset, batch_size=bsz, shuffle=shuffle, num_workers=nworker)
 
         return dataloader
