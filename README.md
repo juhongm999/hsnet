@@ -188,10 +188,10 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 ## BibTeX
 If you use this code for your research, please consider citing:
 ````BibTeX
-@article{min2021hypercorrelation, 
-   title={Hypercorrelation Squeeze for Few-Shot Segmentation},
-   author={Juhong Min and Dahyun Kang and Minsu Cho},
-   journal={arXiv preprint arXiv:2104.01538},
-   year={2021}
+@InProceedings{min2021hypercorrelation,
+    title={Hypercorrelation Squeeze for Few-Shot Segmentation},
+    author={Juhong Min and Dahyun Kang and Minsu Cho},
+    booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    year={2021}
 }
 ````
