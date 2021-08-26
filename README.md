@@ -41,7 +41,7 @@ Download following datasets:
 > ```bash
 > wget http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
 > ```
-> Download PASCAL VOC2012 SDS extended mask annotations from our [[Google Drive](https://drive.google.com/file/d/1SCdiQt-BCUEOapN7P4xON3PlhIorA3MG/view?usp=sharing)].
+> Download PASCAL VOC2012 SDS extended mask annotations from our [[Google Drive](https://drive.google.com/file/d/10zxG2VExoEZUeyQl_uXga2OWHjGeZaf2/view?usp=sharing)].
 
 > #### 2. COCO-20<sup>i</sup>
 > Download COCO2014 train/val images and annotations: 
@@ -50,11 +50,11 @@ Download following datasets:
 > wget http://images.cocodataset.org/zips/val2014.zip
 > wget http://images.cocodataset.org/annotations/annotations_trainval2014.zip
 > ```
-> Download COCO2014 train/val annotations from our Google Drive: [[train2014.zip](https://drive.google.com/file/d/1fcwqp0eQ_Ngf-8ZE73EsHKP8ZLfORdWR/view?usp=sharing)], [[val2014.zip](https://drive.google.com/file/d/16IJeYqt9oHbqnSI9m2nTXcxQWNXCfiGb/view?usp=sharing)].
+> Download COCO2014 train/val annotations from our Google Drive: [[train2014.zip](https://drive.google.com/file/d/1cwup51kcr4m7v9jO14ArpxKMA4O3-Uge/view?usp=sharing)], [[val2014.zip](https://drive.google.com/file/d/1PNw4U3T2MhzAEBWGGgceXvYU3cZ7mJL1/view?usp=sharing)].
 > (and locate both train2014/ and val2014/ under annotations/ directory).
 
 > #### 3. FSS-1000
-> Download FSS-1000 images and annotations from our [[Google Drive](https://drive.google.com/file/d/1i9WlwCEqK4XOdBRh0nShtxxEdWe-1q_r/view?usp=sharing)].
+> Download FSS-1000 images and annotations from our [[Google Drive](https://drive.google.com/file/d/1Fn-cUESMMF1pQy8Xff-vPQvXJdZoUlP3/view?usp=sharing)].
 
 Create a directory '../Datasets_HSN' for the above three few-shot segmentation datasets and appropriately place each dataset to have following directory structure:
 
@@ -129,7 +129,7 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 ## Testing
 
 > ### 1. PASCAL-5<sup>i</sup>
-> Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/1cyz_bv50hiCZ5ZV_5V5zt71l7JoRDA8E?usp=sharing)].
+> Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/1z4KgjgOu--k6YuIj3qWrGg264GRcMis2?usp=sharing)].
 > ```bash
 > python test.py --backbone {vgg16, resnet50, resnet101} 
 >                --fold {0, 1, 2, 3} 
@@ -140,7 +140,7 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 
 
 > ### 2. COCO-20<sup>i</sup>
-> Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/1NeKxvYgP-uhN1y92UR2LVvh1Huw5pvSP?usp=sharing)].
+> Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/1WpwmCQzxTWhJD5aLQhsgJASaoxxqmFUk?usp=sharing)].
 > ```bash
 > python test.py --backbone {resnet50, resnet101} 
 >                --fold {0, 1, 2, 3} 
@@ -150,7 +150,7 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 > ```
 
 > ### 3. FSS-1000
-> Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/1Z6SZPJR-xcPyP0ck22selac4mXS7ElMa?usp=sharing)].
+> Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/1JOaaJknGwsrSEPoLF3x6_lDiy4XfAe99?usp=sharing)].
 > ```bash
 > python test.py --backbone {vgg16, resnet50, resnet101} 
 >                --benchmark fss 
@@ -161,7 +161,7 @@ Create a directory '../Datasets_HSN' for the above three few-shot segmentation d
 > ### 4. Evaluation *without support feature masking* on PASCAL-5<sup>i</sup>
 > * To reproduce the results in Tab.1 of our main paper, **COMMENT OUT line 51 in hsnet.py**: support_feats = self.mask_feature(support_feats, support_mask.clone())
 > 
-> Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/14JAwx1TCohj2_ZiMFeDcTB9HBINxmir2?usp=sharing)].
+> Pretrained models with tensorboard logs are available on our [[Google Drive](https://drive.google.com/drive/folders/18YWMCePIrza194pZvVMqQBuYqhwBmJwd?usp=sharing)].
 > ```bash
 > python test.py --backbone resnet101 
 >                --fold {0, 1, 2, 3} 
