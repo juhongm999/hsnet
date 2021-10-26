@@ -10,7 +10,7 @@ import numpy as np
 
 
 class DatasetFSS(Dataset):
-    def __init__(self, datapath, fold, transform, split, shot):
+    def __init__(self, datapath, fold, transform, split, shot, use_original_imgsize):
         self.split = split
         self.benchmark = 'fss'
         self.shot = shot
